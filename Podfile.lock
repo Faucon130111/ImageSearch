@@ -1,0 +1,80 @@
+PODS:
+  - Alamofire (5.2.2)
+  - Kingfisher (5.15.8):
+    - Kingfisher/Core (= 5.15.8)
+  - Kingfisher/Core (5.15.8)
+  - ReactorKit (2.1.0):
+    - RxSwift (~> 5.0)
+    - WeakMapTable (~> 1.1)
+  - RxAlamofire (5.6.2):
+    - RxAlamofire/Core (= 5.6.2)
+  - RxAlamofire/Core (5.6.2):
+    - Alamofire (~> 5.2)
+    - RxSwift (~> 5.1)
+  - RxBlocking (5.1.1):
+    - RxSwift (~> 5)
+  - RxCocoa (5.1.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxGesture (3.0.2):
+    - RxCocoa (~> 5.1)
+    - RxSwift (~> 5.1)
+  - RxKingfisher (1.0.0):
+    - Kingfisher (~> 5)
+    - RxCocoa (~> 5)
+    - RxSwift (~> 5)
+  - RxOptional (4.1.0):
+    - RxCocoa (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.1.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.1)
+  - RxTest (5.1.1):
+    - RxSwift (~> 5)
+  - WeakMapTable (1.1.0)
+
+DEPENDENCIES:
+  - ReactorKit
+  - RxAlamofire
+  - RxBlocking
+  - RxCocoa
+  - RxGesture
+  - RxKingfisher
+  - RxOptional
+  - RxSwift
+  - RxTest
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Kingfisher
+    - ReactorKit
+    - RxAlamofire
+    - RxBlocking
+    - RxCocoa
+    - RxGesture
+    - RxKingfisher
+    - RxOptional
+    - RxRelay
+    - RxSwift
+    - RxTest
+    - WeakMapTable
+
+SPEC CHECKSUMS:
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
+  Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
+  ReactorKit: 12a93358c554bb3f167b16b14c40374fa9cd5acd
+  RxAlamofire: aa949d345b1689eae02b7c7a217518878144f6df
+  RxBlocking: 5f700a78cad61ce253ebd37c9a39b5ccc76477b4
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxGesture: d6bd7447ca3a596c7a9702a6a2b6a2bb5d8bae54
+  RxKingfisher: 0f07678aca3e6a20143dfba67ec2d2c70d443a9a
+  RxOptional: b1fcd60856807a564c0215c2184b8d33e7826dc2
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  RxTest: 711632d5644dffbeb62c936a521b5b008a1e1faa
+  WeakMapTable: d0327eda092be6a8f7c532942ae98dc7948f5d32
+
+PODFILE CHECKSUM: b48f5eea73817ede98e365040feefa45d9bcd728
+
+COCOAPODS: 1.9.1
