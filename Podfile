@@ -13,6 +13,7 @@ target 'ImageSearch' do
   pod 'ReactorKit'
   pod 'RxGesture'
   pod 'RxOptional'
+  pod 'RxViewController'
 
   target 'ImageSearchTests' do
     inherit! :search_paths

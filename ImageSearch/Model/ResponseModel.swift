@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 다음 이미지 검색 결과
 struct ResponseModel: Codable {
     var meta: MetaModel
     var documents: [DocumentModel]

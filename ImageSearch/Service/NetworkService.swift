@@ -11,7 +11,7 @@ import RxAlamofire
 
 protocol NetworkServiceType {
     func fetchImages(
-        keyword: String,
+        query: String,
         size: Int,
         page: Int
     ) -> Observable<[DocumentModel]>
@@ -20,12 +20,12 @@ protocol NetworkServiceType {
 class NetworkService: NetworkServiceType {
     
     func fetchImages(
-        keyword: String,
+        query: String,
         size: Int = 30,
         page: Int
     ) -> Observable<[DocumentModel]> {
         let parameters: Parameters = [
-            "query": keyword,
+            "query": query,
             "sort": "recency",
             "size": 30,
             "page": page
