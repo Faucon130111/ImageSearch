@@ -20,6 +20,7 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
     // MARK: UI
     @IBOutlet weak fileprivate var searchBar: UISearchBar!
     @IBOutlet weak fileprivate var collectionView: UICollectionView!
+    @IBOutlet weak fileprivate var activityIndicator: UIActivityIndicatorView!
     
     // MARK: ReactorKit
     func bind(reactor: SearchViewReactor) {
@@ -27,7 +28,6 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             .swipe(direction: .up),
             .swipe(direction: .down)
         )
-        .observeOn(MainScheduler.instance)
         .subscribe(onNext: { [unowned self] _ in
             self.view.endEditing(true)
         })
@@ -51,16 +51,27 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             })
             .disposed(by: disposeBag)
         
+        collectionView.rx.didScroll
+            .map { [unowned self] _ in self.isEndOfScroll() }
+            .filter { $0 == true }
+            .throttle(.seconds(1), scheduler: MainScheduler.asyncInstance)
+            .do(onNext: { _ in print("### didScroll") })
+            .map { _ in Reactor.Action.scrollReachedEnd }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         searchBar.rx.text
             .orEmpty
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .filter { $0.isEmpty == false }
-            .map { Reactor.Action.searchImages($0) }
+            .map { Reactor.Action.fetchImages($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.documentModels }
+            .distinctUntilChanged()
+            .do(onNext: { print("### \($0.count)") })
             .bind(to: collectionView.rx.items(cellIdentifier: "ImageCell")) { (row, model, cell) in
                 guard let imageCell = cell as? ImageCell
                 else {
@@ -69,6 +80,33 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
                 imageCell.documentModel = model
             }
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [unowned self] isLoading in
+                if isLoading {
+                    self.activityIndicator.startAnimating()
+                } else {
+                    self.activityIndicator.stopAnimating()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.page }
+            .distinctUntilChanged()
+            .filter { $0 > 1 }
+            .map { [unowned self] _ in self.searchBar.text }
+            .filterNil()
+            .map { Reactor.Action.fetchMoreImages($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: Fileprivate Function
+    fileprivate func isEndOfScroll() -> Bool {
+        let offset: CGFloat = 200.0
+        let bottomEdge = self.collectionView.contentOffset.y + self.collectionView.frame.size.height;
+        return bottomEdge + offset >= self.collectionView.contentSize.height
     }
     
 }
