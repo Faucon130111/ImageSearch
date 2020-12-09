@@ -80,21 +80,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ha2-8G-nD1">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YCY-xP-7rr">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                            </imageView>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="h5d-3A-z1A">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="349.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05g-9w-bSv">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="22"/>
+                                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="12" maxY="0.0"/>
+                                                <state key="normal" title="닫기">
+                                                    <color key="titleColor" systemColor="systemRedColor"/>
+                                                </state>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HNZ-Py-HyE">
+                                                <rect key="frame" x="0.0" y="22" width="414" height="293.5"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k0c-MA-WzP">
+                                                <rect key="frame" x="0.0" y="315.5" width="414" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gmd-AI-6YC">
+                                                <rect key="frame" x="0.0" y="332.5" width="414" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="h5d-3A-z1A" firstAttribute="leading" secondItem="NcR-Q4-V4r" secondAttribute="leading" id="V3R-tF-op6"/>
+                                    <constraint firstItem="h5d-3A-z1A" firstAttribute="top" secondItem="NcR-Q4-V4r" secondAttribute="top" id="dEd-57-JrN"/>
+                                    <constraint firstItem="h5d-3A-z1A" firstAttribute="bottom" secondItem="NcR-Q4-V4r" secondAttribute="bottom" id="ldD-ZH-Fbj"/>
+                                    <constraint firstItem="h5d-3A-z1A" firstAttribute="width" secondItem="YAU-z4-zhw" secondAttribute="width" id="ngY-mz-kUX"/>
+                                    <constraint firstItem="h5d-3A-z1A" firstAttribute="trailing" secondItem="NcR-Q4-V4r" secondAttribute="trailing" id="o5a-Y0-kwE"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="NcR-Q4-V4r"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="YAU-z4-zhw"/>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="p1a-Ex-lRJ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ha2-8G-nD1" firstAttribute="leading" secondItem="p1a-Ex-lRJ" secondAttribute="leading" id="7hT-iq-jfN"/>
-                            <constraint firstItem="ha2-8G-nD1" firstAttribute="top" secondItem="p1a-Ex-lRJ" secondAttribute="top" id="BPP-Ti-56e"/>
-                            <constraint firstItem="ha2-8G-nD1" firstAttribute="trailing" secondItem="p1a-Ex-lRJ" secondAttribute="trailing" id="V3b-KJ-joA"/>
-                            <constraint firstItem="ha2-8G-nD1" firstAttribute="bottom" secondItem="p1a-Ex-lRJ" secondAttribute="bottom" id="brg-Hs-5Zt"/>
+                            <constraint firstItem="YCY-xP-7rr" firstAttribute="bottom" secondItem="p1a-Ex-lRJ" secondAttribute="bottom" id="4Wd-z3-P2t"/>
+                            <constraint firstItem="YCY-xP-7rr" firstAttribute="leading" secondItem="p1a-Ex-lRJ" secondAttribute="leading" id="H4F-CL-WEh"/>
+                            <constraint firstItem="YCY-xP-7rr" firstAttribute="trailing" secondItem="p1a-Ex-lRJ" secondAttribute="trailing" id="Rep-uB-YpM"/>
+                            <constraint firstItem="YCY-xP-7rr" firstAttribute="top" secondItem="p1a-Ex-lRJ" secondAttribute="top" id="pwu-x0-t9M"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="ha2-8G-nD1" id="CSf-wz-1Uq"/>
+                        <outlet property="closeButton" destination="05g-9w-bSv" id="7qJ-fm-9qa"/>
+                        <outlet property="dateTimeNameLabel" destination="gmd-AI-6YC" id="V98-Oi-h32"/>
+                        <outlet property="displaySiteNameLabel" destination="k0c-MA-WzP" id="cwP-1H-NB6"/>
+                        <outlet property="imageView" destination="HNZ-Py-HyE" id="2w9-hE-h2D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pwT-Pc-mao" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -105,6 +146,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

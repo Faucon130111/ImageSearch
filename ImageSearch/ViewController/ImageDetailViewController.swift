@@ -20,24 +20,21 @@ class ImageDetailViewController: UIViewController, Storyboarded, StoryboardView 
     var disposeBag: DisposeBag = DisposeBag()
     
     // MARK: UI
+    @IBOutlet weak fileprivate var closeButton: UIButton!
     @IBOutlet weak fileprivate var imageView: UIImageView!
+    @IBOutlet weak fileprivate var displaySiteNameLabel: UILabel!
+    @IBOutlet weak fileprivate var dateTimeNameLabel: UILabel!
     
     // MARK: ReactorKit
     func bind(reactor: ImageDetailViewReactor) {
-        view.rx.anyGesture(
-            .tap(),
-            .swipe(direction: .up),
-            .swipe(direction: .down),
-            .swipe(direction: .left),
-            .swipe(direction: .right)
-        )
-        .subscribe(onNext: { [unowned self] _ in
-            self.dismiss(
-                animated: true,
-                completion: nil
-            )
-        })
-        .disposed(by: disposeBag)
+        closeButton.rx.tap
+            .subscribe(onNext: { [unowned self] _ in
+                self.dismiss(
+                    animated: true,
+                    completion: nil
+                )
+            })
+            .disposed(by: disposeBag)
         
         self.rx.viewWillAppear
             .map { _ in Reactor.Action.loadImageDetail }
@@ -58,7 +55,7 @@ class ImageDetailViewController: UIViewController, Storyboarded, StoryboardView 
             .distinctUntilChanged()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [unowned self] displaySiteName in
-                print("### displaySiteName: \(displaySiteName)")
+                self.displaySiteNameLabel.text = displaySiteName
             })
             .disposed(by: disposeBag)
         
@@ -67,7 +64,7 @@ class ImageDetailViewController: UIViewController, Storyboarded, StoryboardView 
             .distinctUntilChanged()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [unowned self] dateTime in
-                print("### dateTime: \(dateTime)")
+                self.dateTimeNameLabel.text = dateTime
             })
             .disposed(by: disposeBag)
     }
