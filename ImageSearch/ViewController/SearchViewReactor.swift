@@ -13,6 +13,7 @@ class SearchViewReactor: Reactor {
         case requestSearchImages(String)
         case fetchImages
         case scrollReachedEnd
+        case swipeHorizontal
     }
     
     enum Mutation {
@@ -20,6 +21,7 @@ class SearchViewReactor: Reactor {
         case fetchImages([DocumentModel])
         case updateLoadingState(Bool)
         case increasePageNumber
+        case dismissKeyboard
     }
     
     struct State {
@@ -27,6 +29,7 @@ class SearchViewReactor: Reactor {
         var query: String = ""
         var page: Int = 0
         var isLoading: Bool = false
+        var dismissKeyboard: Bool = false
     }
 
     fileprivate var networkService: NetworkServiceType
@@ -68,6 +71,9 @@ class SearchViewReactor: Reactor {
                 isLoading,
                 .just(.increasePageNumber)
             )
+         
+        case .swipeHorizontal:
+            return .just(.dismissKeyboard)
             
         }
     }
@@ -97,6 +103,10 @@ class SearchViewReactor: Reactor {
             
         case .increasePageNumber:
             newState.page += 1
+            return newState
+            
+        case .dismissKeyboard:
+            newState.dismissKeyboard = true
             return newState
             
         }

@@ -28,14 +28,13 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             .swipe(direction: .up),
             .swipe(direction: .down)
         )
-        .subscribe(onNext: { [unowned self] _ in
-            self.view.endEditing(true)
-        })
+        .map { _ in Reactor.Action.swipeHorizontal }
+        .bind(to: reactor.action)
         .disposed(by: disposeBag)
         
         collectionView.rx.itemSelected
             .do(onNext: { [unowned self] _ in
-                self.view.endEditing(true)
+                self.dismissKeyboard()
             })
             .map { reactor.reactorForImageDetail($0) }
             .subscribe(onNext: { [unowned self] reactor in
@@ -101,6 +100,13 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
                 }
             })
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.dismissKeyboard }
+            .filter { $0 == true }
+            .subscribe(onNext: { [unowned self] _ in
+                self.dismissKeyboard()
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: Fileprivate Function
@@ -108,6 +114,10 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
         let offset: CGFloat = 200.0
         let bottomEdge = self.collectionView.contentOffset.y + self.collectionView.frame.size.height;
         return bottomEdge + offset >= self.collectionView.contentSize.height
+    }
+    
+    fileprivate func dismissKeyboard() {
+        self.view.endEditing(true)
     }
     
 }

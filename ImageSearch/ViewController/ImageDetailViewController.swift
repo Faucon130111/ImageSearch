@@ -28,17 +28,13 @@ class ImageDetailViewController: UIViewController, Storyboarded, StoryboardView 
     
     // MARK: ReactorKit
     func bind(reactor: ImageDetailViewReactor) {
-        closeButton.rx.tap
-            .subscribe(onNext: { [unowned self] _ in
-                self.dismiss(
-                    animated: true,
-                    completion: nil
-                )
-            })
-            .disposed(by: disposeBag)
-        
         self.rx.viewWillAppear
             .map { _ in Reactor.Action.loadImageDetail }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        closeButton.rx.tap
+            .map { Reactor.Action.closeButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -69,6 +65,16 @@ class ImageDetailViewController: UIViewController, Storyboarded, StoryboardView 
             .distinctUntilChanged()
             .observeOn(MainScheduler.instance)
             .bind(to: dateTimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.dismiss }
+            .filter { $0 == true }
+            .subscribe(onNext: { [unowned self] _ in
+                self.dismiss(
+                    animated: true,
+                    completion: nil
+                )
+            })
             .disposed(by: disposeBag)
     }
     

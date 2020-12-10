@@ -89,8 +89,8 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCY-xP-7rr">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="h5d-3A-z1A">
-                                        <rect key="frame" x="0.0" y="8" width="414" height="176"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="h5d-3A-z1A">
+                                        <rect key="frame" x="0.0" y="16" width="414" height="192"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05g-9w-bSv">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="22"/>
@@ -100,13 +100,13 @@
                                                 </state>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HNZ-Py-HyE">
-                                                <rect key="frame" x="0.0" y="30" width="414" height="100"/>
+                                                <rect key="frame" x="0.0" y="38" width="414" height="100"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" priority="750" constant="100" id="Ppf-Re-IPW"/>
                                                 </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Xpw-Cu-6MW">
-                                                <rect key="frame" x="0.0" y="138" width="414" height="38"/>
+                                                <rect key="frame" x="0.0" y="154" width="414" height="38"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k0c-MA-WzP">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="17"/>
@@ -130,8 +130,8 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="h5d-3A-z1A" firstAttribute="leading" secondItem="NcR-Q4-V4r" secondAttribute="leading" id="V3R-tF-op6"/>
-                                    <constraint firstItem="h5d-3A-z1A" firstAttribute="top" secondItem="NcR-Q4-V4r" secondAttribute="top" constant="8" id="dEd-57-JrN"/>
-                                    <constraint firstItem="h5d-3A-z1A" firstAttribute="bottom" secondItem="NcR-Q4-V4r" secondAttribute="bottom" constant="8" id="ldD-ZH-Fbj"/>
+                                    <constraint firstItem="h5d-3A-z1A" firstAttribute="top" secondItem="NcR-Q4-V4r" secondAttribute="top" constant="16" id="dEd-57-JrN"/>
+                                    <constraint firstItem="h5d-3A-z1A" firstAttribute="bottom" secondItem="NcR-Q4-V4r" secondAttribute="bottom" constant="16" id="ldD-ZH-Fbj"/>
                                     <constraint firstItem="h5d-3A-z1A" firstAttribute="width" secondItem="YAU-z4-zhw" secondAttribute="width" id="ngY-mz-kUX"/>
                                     <constraint firstItem="h5d-3A-z1A" firstAttribute="trailing" secondItem="NcR-Q4-V4r" secondAttribute="trailing" id="o5a-Y0-kwE"/>
                                 </constraints>

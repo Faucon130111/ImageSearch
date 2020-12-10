@@ -11,6 +11,7 @@ class ImageDetailViewReactor: Reactor {
     
     enum Action {
         case loadImageDetail
+        case closeButtonTapped
     }
     
     enum Mutation {
@@ -18,6 +19,7 @@ class ImageDetailViewReactor: Reactor {
         case loadImageURL(String?)
         case loadDisplaySiteName(String?)
         case loadDateTime(String?)
+        case dismiss
     }
     
     struct State {
@@ -25,6 +27,7 @@ class ImageDetailViewReactor: Reactor {
         var imageURL: String? = nil
         var displaySiteName: String? = nil
         var dateTime: String? = nil
+        var dismiss: Bool = false
     }
     
     fileprivate var documentModel: DocumentModel
@@ -49,6 +52,9 @@ class ImageDetailViewReactor: Reactor {
                 .just(.loadDateTime(documentModel.datetime))
             )
             
+        case .closeButtonTapped:
+            return .just(.dismiss)
+            
         }
     }
     
@@ -72,6 +78,10 @@ class ImageDetailViewReactor: Reactor {
             
         case let .loadDateTime(dateTime):
             newState.dateTime = dateTime
+            return newState
+            
+        case .dismiss:
+            newState.dismiss = true
             return newState
             
         }
