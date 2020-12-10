@@ -14,12 +14,14 @@ class ImageDetailViewReactor: Reactor {
     }
     
     enum Mutation {
+        case setImageHeight(CGFloat)
         case loadImageURL(String?)
         case loadDisplaySiteName(String?)
         case loadDateTime(String?)
     }
     
     struct State {
+        var imageHeight: CGFloat = 100.0
         var imageURL: String? = nil
         var displaySiteName: String? = nil
         var dateTime: String? = nil
@@ -35,7 +37,13 @@ class ImageDetailViewReactor: Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .loadImageDetail:
+            let screenWidth = UIScreen.main.bounds.width
+            let imageWidth = CGFloat(documentModel.width)
+            let imageHeight = CGFloat(documentModel.height)
+            let ratio = screenWidth / imageWidth
+            
             return .concat(
+                .just(.setImageHeight(imageHeight * ratio)),
                 .just(.loadImageURL(documentModel.image_url)),
                 .just(.loadDisplaySiteName(documentModel.display_sitename)),
                 .just(.loadDateTime(documentModel.datetime))
@@ -50,6 +58,10 @@ class ImageDetailViewReactor: Reactor {
     ) -> State {
         var newState = state
         switch mutation {
+        case let .setImageHeight(height):
+            newState.imageHeight = height
+            return newState
+        
         case let .loadImageURL(imageURL):
             newState.imageURL = imageURL
             return newState

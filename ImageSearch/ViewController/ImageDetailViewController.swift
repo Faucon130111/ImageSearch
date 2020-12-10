@@ -23,7 +23,8 @@ class ImageDetailViewController: UIViewController, Storyboarded, StoryboardView 
     @IBOutlet weak fileprivate var closeButton: UIButton!
     @IBOutlet weak fileprivate var imageView: UIImageView!
     @IBOutlet weak fileprivate var displaySiteNameLabel: UILabel!
-    @IBOutlet weak fileprivate var dateTimeNameLabel: UILabel!
+    @IBOutlet weak fileprivate var dateTimeLabel: UILabel!
+    @IBOutlet weak fileprivate var imageViewHeightConstraint: NSLayoutConstraint!
     
     // MARK: ReactorKit
     func bind(reactor: ImageDetailViewReactor) {
@@ -41,6 +42,12 @@ class ImageDetailViewController: UIViewController, Storyboarded, StoryboardView 
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        reactor.state.map { $0.imageHeight }
+            .distinctUntilChanged()
+            .observeOn(MainScheduler.instance)
+            .bind(to: imageViewHeightConstraint.rx.constant)
+            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.imageURL }
             .filterNil()
             .distinctUntilChanged()
@@ -54,18 +61,14 @@ class ImageDetailViewController: UIViewController, Storyboarded, StoryboardView 
             .filterNil()
             .distinctUntilChanged()
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [unowned self] displaySiteName in
-                self.displaySiteNameLabel.text = displaySiteName
-            })
+            .bind(to: displaySiteNameLabel.rx.text)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.dateTime }
             .filterNil()
             .distinctUntilChanged()
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [unowned self] dateTime in
-                self.dateTimeNameLabel.text = dateTime
-            })
+            .bind(to: dateTimeLabel.rx.text)
             .disposed(by: disposeBag)
     }
     
