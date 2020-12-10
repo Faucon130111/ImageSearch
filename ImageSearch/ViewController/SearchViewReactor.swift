@@ -21,6 +21,7 @@ class SearchViewReactor: Reactor {
         case fetchImages([DocumentModel])
         case updateLoadingState(Bool)
         case increasePageNumber
+        case showResultEmptyMessage(String?)
         case dismissKeyboard
     }
     
@@ -29,6 +30,7 @@ class SearchViewReactor: Reactor {
         var query: String = ""
         var page: Int = 0
         var isLoading: Bool = false
+        var resultEmptyMessage: String? = nil
         var dismissKeyboard: Bool = false
     }
 
@@ -43,6 +45,7 @@ class SearchViewReactor: Reactor {
         switch action {
         case let .requestSearchImages(query):
             return .concat(
+                .just(.showResultEmptyMessage(nil)),
                 .just(.dismissKeyboard),
                 .just(.fetchImages([])),
                 .just(.storeNewQuery(query)),
@@ -51,6 +54,7 @@ class SearchViewReactor: Reactor {
         
         case .fetchImages:
             return .concat(
+                .just(.showResultEmptyMessage(nil)),
                 .just(.updateLoadingState(true)),
                 networkService.fetchImages(
                     query: self.currentState.query,
@@ -58,11 +62,14 @@ class SearchViewReactor: Reactor {
                     page: self.currentState.page
                 )
                 .catchError({ error in
-                    print("### error: \(error)")
+                    print("### network error: \(error)")
                     return .just([])
                 })
                 .map(Mutation.fetchImages),
-                .just(.updateLoadingState(false))
+                .just(.updateLoadingState(false)),
+                .just(.showResultEmptyMessage(
+                    currentState.documentModels.isEmpty ? "검색 결과가 없습니다." : nil
+                ))
             )
             
         case .scrollReachedEnd:
@@ -108,6 +115,10 @@ class SearchViewReactor: Reactor {
             
         case .increasePageNumber:
             newState.page += 1
+            return newState
+            
+        case let .showResultEmptyMessage(message):
+            newState.resultEmptyMessage = message
             return newState
             
         case .dismissKeyboard:

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1CF59BFD8A132C662C557336 /* Pods_ImageSearch_ImageSearchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1308B19BB17F097C23151888 /* Pods_ImageSearch_ImageSearchUITests.framework */; };
 		2E7D48172580BA7400E4DB5D /* ImageFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7D48162580BA7400E4DB5D /* ImageFlowLayout.swift */; };
+		2E7D484D2581EBF600E4DB5D /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7D484C2581EBF600E4DB5D /* UICollectionView+Extension.swift */; };
 		2EF88D9F25806C990012BED5 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF88D9E25806C990012BED5 /* ImageCell.swift */; };
 		2EF88DAB258087860012BED5 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF88DAA258087860012BED5 /* ImageDetailViewController.swift */; };
 		2EF88DB0258088C40012BED5 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF88DAF258088C40012BED5 /* UIImageView+Extension.swift */; };
@@ -53,6 +54,7 @@
 		1CD8CD19B030F67BE319C26C /* Pods-ImageSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageSearch.release.xcconfig"; path = "Target Support Files/Pods-ImageSearch/Pods-ImageSearch.release.xcconfig"; sourceTree = "<group>"; };
 		24D83A8DBA3B885F156FA684 /* Pods-ImageSearchUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageSearchUITests.debug.xcconfig"; path = "Target Support Files/Pods-ImageSearchUITests/Pods-ImageSearchUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		2E7D48162580BA7400E4DB5D /* ImageFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFlowLayout.swift; sourceTree = "<group>"; };
+		2E7D484C2581EBF600E4DB5D /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		2EF88D9E25806C990012BED5 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		2EF88DAA258087860012BED5 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		2EF88DAF258088C40012BED5 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				2EF88DAF258088C40012BED5 /* UIImageView+Extension.swift */,
+				2E7D484C2581EBF600E4DB5D /* UICollectionView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -527,6 +530,7 @@
 				5C5B62FC257F9F4800BD2EB7 /* MetaModel.swift in Sources */,
 				5C5B634E257FABB200BD2EB7 /* SearchViewReactor.swift in Sources */,
 				5C5B6301257F9F6700BD2EB7 /* DocumentModel.swift in Sources */,
+				2E7D484D2581EBF600E4DB5D /* UICollectionView+Extension.swift in Sources */,
 				5C5B62F2257F9EB000BD2EB7 /* NetworkService.swift in Sources */,
 				2E7D48172580BA7400E4DB5D /* ImageFlowLayout.swift in Sources */,
 				2EF88DB0258088C40012BED5 /* UIImageView+Extension.swift in Sources */,

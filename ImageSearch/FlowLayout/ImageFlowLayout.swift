@@ -2,7 +2,7 @@
 //  ImageFlowLayout.swift
 //  ImageSearch
 //
-//  Created by bonhyuk park on 2020/12/09.
+//  Created by 박본혁 on 2020/12/09.
 //
 
 import UIKit

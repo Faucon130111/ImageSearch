@@ -102,6 +102,13 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             })
             .disposed(by: disposeBag)
         
+        reactor.state.map { $0.resultEmptyMessage }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [unowned self] message in
+                self.collectionView.showEmptyMessage(message)
+            })
+            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.dismissKeyboard }
             .filter { $0 == true }
             .subscribe(onNext: { [unowned self] _ in
