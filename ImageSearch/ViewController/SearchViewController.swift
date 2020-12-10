@@ -55,7 +55,6 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             .map { [unowned self] _ in self.isEndOfScroll() }
             .filter { $0 == true }
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .do(onNext: { _ in print("### didScroll") })
             .map { _ in Reactor.Action.scrollReachedEnd }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -65,14 +64,12 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .filterEmpty()
-            .do(onNext: { print("### text: \($0)") })
             .map(Reactor.Action.requestSearchImages)
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.documentModels }
             .distinctUntilChanged()
-            .do(onNext: { print("### count: \($0.count)") })
             .bind(to: collectionView.rx.items(cellIdentifier: "ImageCell")) { (row, model, cell) in
                 guard let imageCell = cell as? ImageCell
                 else {
@@ -85,7 +82,6 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
         reactor.state.map { $0.page }
             .distinctUntilChanged()
             .filter { $0 > 0 }
-            .do(onNext: { print("### page: \($0)") })
             .observeOn(MainScheduler.asyncInstance)
             .map { _ in Reactor.Action.fetchImages }
             .bind(to: reactor.action)
@@ -93,7 +89,6 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
         
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
-            .do(onNext: { print("### isLoading: \($0)") })
             .subscribe(onNext: { [unowned self] isLoading in
                 if isLoading {
                     self.activityIndicator.startAnimating()

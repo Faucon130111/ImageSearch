@@ -31,8 +31,6 @@ class NetworkService: NetworkServiceType {
             "page": page
         ]
         
-        print("### parameters: \(parameters)")
-        
         let headers: HTTPHeaders = [
             "Authorization": "KakaoAK 0610a681b98c978c90fc4a3c58bfbc7c"
         ]
