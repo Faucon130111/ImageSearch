@@ -10,22 +10,23 @@ import ReactorKit
 class SearchViewReactor: Reactor {
     
     enum Action {
-        case fetchImages(String)
-        case fetchMoreImages(String)
+        case requestSearchImages(String)
+        case fetchImages
         case scrollReachedEnd
     }
     
     enum Mutation {
+        case storeNewQuery(String)
         case fetchImages([DocumentModel])
-        case fetchMoreImages([DocumentModel])
         case updateLoadingState(Bool)
         case increasePageNumber
     }
     
     struct State {
         var documentModels: [DocumentModel] = []
+        var query: String = ""
+        var page: Int = 0
         var isLoading: Bool = false
-        var page: Int = 1
     }
 
     fileprivate var networkService: NetworkServiceType
@@ -37,37 +38,23 @@ class SearchViewReactor: Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        // FIXME: init collection view, .just(.increasePageNumber
-        case let .fetchImages(query):
-            let isLoading: Observable<Mutation> = .just(.updateLoadingState(true))
-            let loadingComplete: Observable<Mutation> = .just(.updateLoadingState(false))
-            let fetchImage: Observable<Mutation> = networkService.fetchImages(
-                query: query,
-                size: 30,
-                page: self.currentState.page
-            )
-            .map(Mutation.fetchImages)
-            
+        case let .requestSearchImages(query):
             return .concat(
-                isLoading,
-                fetchImage,
-                loadingComplete
+                .just(.fetchImages([])),
+                .just(.storeNewQuery(query)),
+                .just(.increasePageNumber)
             )
-            
-        case let .fetchMoreImages(query):
-            let isLoading: Observable<Mutation> = .just(.updateLoadingState(true))
-            let loadingComplete: Observable<Mutation> = .just(.updateLoadingState(false))
-            let fetchMoreImage: Observable<Mutation> = networkService.fetchImages(
-                query: query,
-                size: 30,
-                page: self.currentState.page
-            )
-            .map(Mutation.fetchMoreImages)
-            
+        
+        case .fetchImages:
             return .concat(
-                isLoading,
-                fetchMoreImage,
-                loadingComplete
+                .just(.updateLoadingState(true)),
+                networkService.fetchImages(
+                    query: self.currentState.query,
+                    size: 30,
+                    page: self.currentState.page
+                )
+                .map(Mutation.fetchImages),
+                .just(.updateLoadingState(false))
             )
             
         case .scrollReachedEnd:
@@ -91,12 +78,17 @@ class SearchViewReactor: Reactor {
     ) -> State {
         var newState = state
         switch mutation {
-        case let .fetchImages(documentModels):
-            newState.documentModels = documentModels
+        case let .storeNewQuery(query):
+            newState.query = query
             return newState
-            
-        case let .fetchMoreImages(documentModels):
-            newState.documentModels += documentModels
+        
+        case let .fetchImages(documentModels):
+            if documentModels.isEmpty {
+                newState.page = 0
+                newState.documentModels = documentModels
+            } else {
+                newState.documentModels += documentModels
+            }
             return newState
             
         case let .updateLoadingState(isLoading):

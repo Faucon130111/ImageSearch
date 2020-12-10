@@ -64,14 +64,15 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             .orEmpty
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .filter { $0.isEmpty == false }
-            .map { Reactor.Action.fetchImages($0) }
+            .filterEmpty()
+            .do(onNext: { print("### text: \($0)") })
+            .map(Reactor.Action.requestSearchImages)
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.documentModels }
             .distinctUntilChanged()
-            .do(onNext: { print("### \($0.count)") })
+            .do(onNext: { print("### count: \($0.count)") })
             .bind(to: collectionView.rx.items(cellIdentifier: "ImageCell")) { (row, model, cell) in
                 guard let imageCell = cell as? ImageCell
                 else {
@@ -81,8 +82,17 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             }
             .disposed(by: disposeBag)
         
+        reactor.state.map { $0.page }
+            .distinctUntilChanged()
+            .filter { $0 > 0 }
+            .do(onNext: { print("### page: \($0)") })
+            .map { _ in Reactor.Action.fetchImages }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
+            .do(onNext: { print("### isLoading: \($0)") })
             .subscribe(onNext: { [unowned self] isLoading in
                 if isLoading {
                     self.activityIndicator.startAnimating()
@@ -90,15 +100,6 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
                     self.activityIndicator.stopAnimating()
                 }
             })
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.page }
-            .distinctUntilChanged()
-            .filter { $0 > 1 }
-            .map { [unowned self] _ in self.searchBar.text }
-            .filterNil()
-            .map { Reactor.Action.fetchMoreImages($0) }
-            .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
