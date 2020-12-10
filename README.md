@@ -28,13 +28,15 @@
 
 ### 기술 스택
 
-- Swfit 5
+- Swift 5
+
+- Auto Layout (Storyboard)
+
+- [CocoaPods](https://cocoapods.org)
 
 - [Kingfisher](https://github.com/onevcat/Kingfisher)
 
 - [RxSwift](https://github.com/ReactiveX/RxSwift)
-
-- [ReactorKit](https://github.com/ReactorKit/ReactorKit)
 
 - [RxAlamofire](https://github.com/RxSwiftCommunity/RxAlamofire)
 
@@ -44,8 +46,4 @@
 
 - [RxViewController](https://github.com/devxoul/RxViewController)
 
-- Auto Layout (Storyboard)
-
-- [CocoaPods](https://cocoapods.org)
-
-
+- [ReactorKit](https://github.com/ReactorKit/ReactorKit)
