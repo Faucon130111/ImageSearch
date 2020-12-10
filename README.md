@@ -28,7 +28,9 @@
 
 ### 기술 스택
 
-- Swfit 5
+- Swift 5
+
+- Auto Layout (Storyboard)
 
 - [Kingfisher](https://github.com/onevcat/Kingfisher)
 
@@ -43,8 +45,6 @@
 - [RxOptional](https://github.com/RxSwiftCommunity/RxOptional)
 
 - [RxViewController](https://github.com/devxoul/RxViewController)
-
-- Auto Layout (Storyboard)
 
 - [CocoaPods](https://cocoapods.org)
 
