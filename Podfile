@@ -9,7 +9,7 @@ target 'ImageSearch' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxAlamofire'
-  pod 'RxKingfisher'
+  pod 'Kingfisher'
   pod 'ReactorKit'
   pod 'RxGesture'
   pod 'RxOptional'
