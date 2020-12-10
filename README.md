@@ -32,11 +32,11 @@
 
 - Auto Layout (Storyboard)
 
+- [CocoaPods](https://cocoapods.org)
+
 - [Kingfisher](https://github.com/onevcat/Kingfisher)
 
 - [RxSwift](https://github.com/ReactiveX/RxSwift)
-
-- [ReactorKit](https://github.com/ReactorKit/ReactorKit)
 
 - [RxAlamofire](https://github.com/RxSwiftCommunity/RxAlamofire)
 
@@ -46,6 +46,4 @@
 
 - [RxViewController](https://github.com/devxoul/RxViewController)
 
-- [CocoaPods](https://cocoapods.org)
-
-
+- [ReactorKit](https://github.com/ReactorKit/ReactorKit)
