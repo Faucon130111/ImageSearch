@@ -6,7 +6,6 @@
 //
 
 import RxCocoa
-import RxKingfisher
 import RxSwift
 
 class ImageCell: UICollectionViewCell {

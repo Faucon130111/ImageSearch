@@ -28,6 +28,7 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             .swipe(direction: .up),
             .swipe(direction: .down)
         )
+        .when(.recognized)
         .map { _ in Reactor.Action.swipeHorizontal }
         .bind(to: reactor.action)
         .disposed(by: disposeBag)

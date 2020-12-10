@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import RxKingfisher
+import Kingfisher
 
 extension UIImageView {
     

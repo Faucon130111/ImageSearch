@@ -43,6 +43,7 @@ class SearchViewReactor: Reactor {
         switch action {
         case let .requestSearchImages(query):
             return .concat(
+                .just(.dismissKeyboard),
                 .just(.fetchImages([])),
                 .just(.storeNewQuery(query)),
                 .just(.increasePageNumber)
@@ -56,6 +57,10 @@ class SearchViewReactor: Reactor {
                     size: 30,
                     page: self.currentState.page
                 )
+                .catchError({ error in
+                    print("### error: \(error)")
+                    return .just([])
+                })
                 .map(Mutation.fetchImages),
                 .just(.updateLoadingState(false))
             )
