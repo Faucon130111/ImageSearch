@@ -73,14 +73,12 @@ class SearchViewReactor: Reactor {
             )
             
         case .scrollReachedEnd:
-            let isLoading: Observable<Mutation> = .just(.updateLoadingState(true))
-            
             if currentState.isLoading {
-                return isLoading
+                return .just(.updateLoadingState(true))
             }
             
             return .concat(
-                isLoading,
+                .just(.updateLoadingState(true)),
                 .just(.increasePageNumber)
             )
          

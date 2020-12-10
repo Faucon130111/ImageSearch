@@ -51,7 +51,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="4QL-S5-7vO">
-                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                                <rect key="frame" x="197" y="488" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -60,11 +60,11 @@
                             <constraint firstItem="QjO-FW-xaa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9US-qV-Ktk"/>
                             <constraint firstItem="QjO-FW-xaa" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="9ok-Ql-qgT"/>
                             <constraint firstAttribute="bottom" secondItem="CYL-Yi-pLe" secondAttribute="bottom" id="FgB-X1-NoI"/>
-                            <constraint firstItem="4QL-S5-7vO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HzD-yt-f6h"/>
-                            <constraint firstItem="4QL-S5-7vO" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Pfy-dT-8o1"/>
                             <constraint firstItem="CYL-Yi-pLe" firstAttribute="top" secondItem="QjO-FW-xaa" secondAttribute="bottom" id="Q9k-Ei-JT6"/>
                             <constraint firstItem="CYL-Yi-pLe" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="UDt-zK-aBb"/>
                             <constraint firstItem="CYL-Yi-pLe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Zjw-WR-ywb"/>
+                            <constraint firstItem="4QL-S5-7vO" firstAttribute="centerY" secondItem="CYL-Yi-pLe" secondAttribute="centerY" id="raf-5K-aBU"/>
+                            <constraint firstItem="4QL-S5-7vO" firstAttribute="centerX" secondItem="CYL-Yi-pLe" secondAttribute="centerX" id="x1J-SW-TjK"/>
                             <constraint firstItem="QjO-FW-xaa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="xed-tm-LAj"/>
                         </constraints>
                     </view>
@@ -131,7 +131,7 @@
                                 <constraints>
                                     <constraint firstItem="h5d-3A-z1A" firstAttribute="leading" secondItem="NcR-Q4-V4r" secondAttribute="leading" id="V3R-tF-op6"/>
                                     <constraint firstItem="h5d-3A-z1A" firstAttribute="top" secondItem="NcR-Q4-V4r" secondAttribute="top" constant="16" id="dEd-57-JrN"/>
-                                    <constraint firstItem="h5d-3A-z1A" firstAttribute="bottom" secondItem="NcR-Q4-V4r" secondAttribute="bottom" constant="16" id="ldD-ZH-Fbj"/>
+                                    <constraint firstItem="h5d-3A-z1A" firstAttribute="bottom" secondItem="NcR-Q4-V4r" secondAttribute="bottom" constant="-16" id="ldD-ZH-Fbj"/>
                                     <constraint firstItem="h5d-3A-z1A" firstAttribute="width" secondItem="YAU-z4-zhw" secondAttribute="width" id="ngY-mz-kUX"/>
                                     <constraint firstItem="h5d-3A-z1A" firstAttribute="trailing" secondItem="NcR-Q4-V4r" secondAttribute="trailing" id="o5a-Y0-kwE"/>
                                 </constraints>
