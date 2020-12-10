@@ -54,7 +54,7 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
         collectionView.rx.didScroll
             .map { [unowned self] _ in self.isEndOfScroll() }
             .filter { $0 == true }
-            .throttle(.seconds(1), scheduler: MainScheduler.asyncInstance)
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .do(onNext: { _ in print("### didScroll") })
             .map { _ in Reactor.Action.scrollReachedEnd }
             .bind(to: reactor.action)
@@ -86,6 +86,7 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             .distinctUntilChanged()
             .filter { $0 > 0 }
             .do(onNext: { print("### page: \($0)") })
+            .observeOn(MainScheduler.asyncInstance)
             .map { _ in Reactor.Action.fetchImages }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
