@@ -55,6 +55,10 @@ class NetworkService: NetworkServiceType {
             }
             return responseModel.documents
         }
+        .do(onError: { error in
+            print("⚠️ Network error: \(error.localizedDescription)")
+        })
+        .catchErrorJustReturn([])
     }
     
 }

@@ -61,10 +61,6 @@ class SearchViewReactor: Reactor {
                     size: 30,
                     page: self.currentState.page
                 )
-                .catchError({ error in
-                    print("### network error: \(error)")
-                    return .just([])
-                })
                 .map(Mutation.fetchImages),
                 .just(.updateLoadingState(false)),
                 .just(.showResultEmptyMessage(
