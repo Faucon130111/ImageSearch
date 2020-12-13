@@ -11,19 +11,26 @@ import RxAlamofire
 
 protocol NetworkServiceType {
     func fetchImages(
-        query: String,
+        query: String?,
         size: Int,
         page: Int
-    ) -> Observable<[DocumentModel]>
+    ) -> Observable<(images: [DocumentModel], nextPage: Int?)>
 }
 
 class NetworkService: NetworkServiceType {
     
     func fetchImages(
-        query: String,
+        query: String?,
         size: Int = 30,
         page: Int
-    ) -> Observable<[DocumentModel]> {
+    ) -> Observable<(images: [DocumentModel], nextPage: Int?)> {
+        let emptyResult: ([DocumentModel], Int?) = ([], nil)
+        
+        guard let query = query
+        else {
+            return .just(emptyResult)
+        }
+        
         let parameters: Parameters = [
             "query": query,
             "sort": "recency",
@@ -51,14 +58,17 @@ class NetworkService: NetworkServiceType {
                 from: jsonData
             )
             else {
-                return []
+                return emptyResult
             }
-            return responseModel.documents
+            return (
+                responseModel.documents,
+                page + 1
+            )
         }
         .do(onError: { error in
             print("⚠️ Network error: \(error.localizedDescription)")
         })
-        .catchErrorJustReturn([])
+        .catchErrorJustReturn(emptyResult)
     }
     
 }

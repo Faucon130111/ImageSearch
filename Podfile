@@ -11,7 +11,6 @@ target 'ImageSearch' do
   pod 'RxAlamofire'
   pod 'Kingfisher'
   pod 'ReactorKit'
-  pod 'RxGesture'
   pod 'RxOptional'
   pod 'RxViewController'
 

@@ -40,8 +40,6 @@
 
 - [RxAlamofire](https://github.com/RxSwiftCommunity/RxAlamofire)
 
-- [RxGesture](https://github.com/RxSwiftCommunity/RxGesture)
-
 - [RxOptional](https://github.com/RxSwiftCommunity/RxOptional)
 
 - [RxViewController](https://github.com/devxoul/RxViewController)

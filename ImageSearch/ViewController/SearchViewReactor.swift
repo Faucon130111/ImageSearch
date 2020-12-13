@@ -10,28 +10,22 @@ import ReactorKit
 class SearchViewReactor: Reactor {
     
     enum Action {
-        case requestSearchImages(String)
-        case fetchImages
-        case scrollReachedEnd
-        case swipeHorizontal
+        case updateQuery(String?)
+        case loadNextPage
     }
     
     enum Mutation {
-        case storeNewQuery(String)
-        case fetchImages([DocumentModel])
-        case updateLoadingState(Bool)
-        case increasePageNumber
-        case showResultEmptyMessage(String?)
-        case dismissKeyboard
+        case setQuery(String?)
+        case setImages([DocumentModel], Int?)
+        case appendImages([DocumentModel], Int?)
+        case setLoadingNextPage(Bool)
     }
     
     struct State {
-        var documentModels: [DocumentModel] = []
-        var query: String = ""
-        var page: Int = 0
-        var isLoading: Bool = false
-        var resultEmptyMessage: String? = nil
-        var dismissKeyboard: Bool = false
+        var query: String?
+        var page: Int?
+        var documentModels: [DocumentModel]?
+        var isLoadingNextPage: Bool = false
     }
 
     fileprivate var networkService: NetworkServiceType
@@ -43,43 +37,37 @@ class SearchViewReactor: Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case let .requestSearchImages(query):
+        case let .updateQuery(query):
             return .concat(
-                .just(.showResultEmptyMessage(nil)),
-                .just(.dismissKeyboard),
-                .just(.fetchImages([])),
-                .just(.storeNewQuery(query)),
-                .just(.increasePageNumber)
-            )
-        
-        case .fetchImages:
-            return .concat(
-                .just(.showResultEmptyMessage(nil)),
-                .just(.updateLoadingState(true)),
+                .just(.setQuery(query)),
+                
                 networkService.fetchImages(
-                    query: self.currentState.query,
+                    query: query,
                     size: 30,
-                    page: self.currentState.page
+                    page: 1
                 )
-                .map(Mutation.fetchImages),
-                .just(.updateLoadingState(false)),
-                .just(.showResultEmptyMessage(
-                    currentState.documentModels.isEmpty ? "검색 결과가 없습니다." : nil
-                ))
+                .map { Mutation.setImages($0, $1) }
             )
             
-        case .scrollReachedEnd:
-            if currentState.isLoading {
-                return .just(.updateLoadingState(true))
+        case .loadNextPage:
+            guard let page = currentState.page,
+                  currentState.isLoadingNextPage == false
+            else {
+                return .empty()
             }
             
             return .concat(
-                .just(.updateLoadingState(true)),
-                .just(.increasePageNumber)
+                .just(.setLoadingNextPage(true)),
+                
+                networkService.fetchImages(
+                    query: currentState.query,
+                    size: 30,
+                    page: page
+                )
+                .map { Mutation.appendImages($0, $1) },
+                
+                .just(.setLoadingNextPage(false))
             )
-         
-        case .swipeHorizontal:
-            return .just(.dismissKeyboard)
             
         }
     }
@@ -90,40 +78,32 @@ class SearchViewReactor: Reactor {
     ) -> State {
         var newState = state
         switch mutation {
-        case let .storeNewQuery(query):
+        case let .setQuery(query):
             newState.query = query
             return newState
-        
-        case let .fetchImages(documentModels):
-            if documentModels.isEmpty {
-                newState.page = 0
-                newState.documentModels = documentModels
-            } else {
-                newState.documentModels += documentModels
+            
+        case let .setImages(documentModels, nextPage):
+            newState.documentModels = documentModels
+            newState.page = nextPage
+            return newState
+            
+        case let .appendImages(documentModels, nextPage):
+            if newState.documentModels == nil {
+                newState.documentModels = []
             }
+            newState.documentModels!.append(contentsOf: documentModels)
+            newState.page = nextPage
             return newState
             
-        case let .updateLoadingState(isLoading):
-            newState.isLoading = isLoading
-            return newState
-            
-        case .increasePageNumber:
-            newState.page += 1
-            return newState
-            
-        case let .showResultEmptyMessage(message):
-            newState.resultEmptyMessage = message
-            return newState
-            
-        case .dismissKeyboard:
-            newState.dismissKeyboard = true
+        case let .setLoadingNextPage(isLoadingNextPage):
+            newState.isLoadingNextPage = isLoadingNextPage
             return newState
             
         }
     }
     
     func reactorForImageDetail(_ indexPath: IndexPath) -> ImageDetailViewReactor {
-        let documentModel = currentState.documentModels[indexPath.row]
+        let documentModel = currentState.documentModels![indexPath.row]
         return ImageDetailViewReactor(documentModel: documentModel)
     }
     

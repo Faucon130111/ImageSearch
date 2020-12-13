@@ -7,12 +7,11 @@
 
 import ReactorKit
 import RxCocoa
-import RxGesture
 import RxOptional
 import RxSwift
 
 class SearchViewController: UIViewController, Storyboarded, StoryboardView {
-
+    
     // MARK: Variables
     typealias Reactor = SearchViewReactor
     var disposeBag = DisposeBag()
@@ -24,25 +23,14 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
     
     // MARK: ReactorKit
     func bind(reactor: SearchViewReactor) {
-        view.rx.anyGesture(
-            .swipe(direction: .up),
-            .swipe(direction: .down)
-        )
-        .when(.recognized)
-        .map { _ in Reactor.Action.swipeHorizontal }
-        .bind(to: reactor.action)
-        .disposed(by: disposeBag)
-        
+        // View
         collectionView.rx.itemSelected
-            .do(onNext: { [unowned self] _ in
-                self.dismissKeyboard()
-            })
             .map { reactor.reactorForImageDetail($0) }
             .subscribe(onNext: { [unowned self] reactor in
                 let imageDetailViewController = ImageDetailViewController.instantiate()
                 imageDetailViewController.reactor = reactor
                 imageDetailViewController.modalPresentationStyle = .fullScreen
-
+                
                 self.present(
                     imageDetailViewController,
                     animated: true,
@@ -51,43 +39,46 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             })
             .disposed(by: disposeBag)
         
-        collectionView.rx.didScroll
-            .map { [unowned self] _ in self.isEndOfScroll() }
-            .filter { $0 == true }
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .map { _ in Reactor.Action.scrollReachedEnd }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
+        // Action
         searchBar.rx.text
             .orEmpty
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .filterEmpty()
-            .map(Reactor.Action.requestSearchImages)
+            .do(onNext: { [unowned self] _ in
+                self.collectionView.setContentOffset(.zero, animated: false)
+            })
+            .map(Reactor.Action.updateQuery)
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.documentModels }
-            .distinctUntilChanged()
-            .bind(to: collectionView.rx.items(cellIdentifier: "ImageCell")) { (row, model, cell) in
-                guard let imageCell = cell as? ImageCell
+        collectionView.rx.contentOffset
+            .filter { [unowned self] offset in
+                guard self.collectionView.frame.height > 0
                 else {
-                    return
+                    return false
                 }
-                imageCell.documentModel = model
+                return offset.y + self.collectionView.frame.height >= self.collectionView.contentSize.height - 100
+            }
+            .map { _ in Reactor.Action.loadNextPage }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        // State
+        reactor.state.map { $0.documentModels }
+            .filterNil()
+            .distinctUntilChanged()
+            .do(onNext: { [unowned self] documentModels in
+                let message = documentModels.isEmpty ? "검색 결과가 없습니다." : nil
+                self.collectionView.showEmptyMessage(message)
+            })
+            .bind(to: collectionView.rx.items(cellIdentifier: "ImageCell")) { (row, model, cell) in
+                let imageCell = cell as? ImageCell
+                imageCell?.documentModel = model
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.page }
-            .distinctUntilChanged()
-            .filter { $0 > 0 }
-            .observeOn(MainScheduler.asyncInstance)
-            .map { _ in Reactor.Action.fetchImages }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.isLoading }
+        reactor.state.map { $0.isLoadingNextPage }
             .distinctUntilChanged()
             .subscribe(onNext: { [unowned self] isLoading in
                 if isLoading {
@@ -97,31 +88,6 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
                 }
             })
             .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.resultEmptyMessage }
-            .distinctUntilChanged()
-            .subscribe(onNext: { [unowned self] message in
-                self.collectionView.showEmptyMessage(message)
-            })
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.dismissKeyboard }
-            .filter { $0 == true }
-            .subscribe(onNext: { [unowned self] _ in
-                self.dismissKeyboard()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    // MARK: Fileprivate Function
-    fileprivate func isEndOfScroll() -> Bool {
-        let offset: CGFloat = 200.0
-        let bottomEdge = self.collectionView.contentOffset.y + self.collectionView.frame.size.height;
-        return bottomEdge + offset >= self.collectionView.contentSize.height
-    }
-    
-    fileprivate func dismissKeyboard() {
-        self.view.endEditing(true)
     }
     
 }
