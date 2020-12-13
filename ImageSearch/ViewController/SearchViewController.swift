@@ -65,16 +65,16 @@ class SearchViewController: UIViewController, Storyboarded, StoryboardView {
             .disposed(by: disposeBag)
         
         // State
-        reactor.state.map { $0.documentModels }
+        reactor.state.map { $0.imageModels }
             .filterNil()
             .distinctUntilChanged()
-            .do(onNext: { [unowned self] documentModels in
-                let message = documentModels.isEmpty ? "검색 결과가 없습니다." : nil
+            .do(onNext: { [unowned self] imageModels in
+                let message = imageModels.isEmpty ? "검색 결과가 없습니다." : nil
                 self.collectionView.showEmptyMessage(message)
             })
             .bind(to: collectionView.rx.items(cellIdentifier: "ImageCell")) { (row, model, cell) in
                 let imageCell = cell as? ImageCell
-                imageCell?.documentModel = model
+                imageCell?.imageModel = model
             }
             .disposed(by: disposeBag)
         

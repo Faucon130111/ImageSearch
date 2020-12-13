@@ -30,26 +30,26 @@ class ImageDetailViewReactor: Reactor {
         var dismiss: Bool = false
     }
     
-    fileprivate var documentModel: DocumentModel
+    fileprivate var imageModel: ImageModel
     var initialState: State = State()
     
-    init(documentModel: DocumentModel) {
-        self.documentModel = documentModel
+    init(imageModel: ImageModel) {
+        self.imageModel = imageModel
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .loadImageDetail:
             let screenWidth = UIScreen.main.bounds.width
-            let imageWidth = CGFloat(documentModel.width)
-            let imageHeight = CGFloat(documentModel.height)
+            let imageWidth = CGFloat(imageModel.width)
+            let imageHeight = CGFloat(imageModel.height)
             let ratio = screenWidth / imageWidth
             
             return .concat(
                 .just(.setImageHeight(imageHeight * ratio)),
-                .just(.loadImageURL(documentModel.image_url)),
-                .just(.loadDisplaySiteName(documentModel.display_sitename)),
-                .just(.loadDateTime(documentModel.datetime))
+                .just(.loadImageURL(imageModel.image_url)),
+                .just(.loadDisplaySiteName(imageModel.display_sitename)),
+                .just(.loadDateTime(imageModel.datetime))
             )
             
         case .closeButtonTapped:

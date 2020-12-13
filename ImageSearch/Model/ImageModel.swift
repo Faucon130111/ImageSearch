@@ -1,5 +1,5 @@
 //
-//  DocumentModel.swift
+//  ImageModel.swift
 //  ImageSearch
 //
 //  Created by 박본혁 on 2020/12/08.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// 검색된 이미지 정보
-struct DocumentModel: Codable, Equatable {
+struct ImageModel: Codable, Equatable {
     /// 컬렉션
     var collection: String
     /// 미리보기 이미지 URL

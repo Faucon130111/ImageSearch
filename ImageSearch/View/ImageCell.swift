@@ -10,9 +10,9 @@ import RxSwift
 
 class ImageCell: UICollectionViewCell {
     
-    var documentModel: DocumentModel! {
+    var imageModel: ImageModel! {
         didSet {
-            imageView.loadImage(documentModel.thumbnail_url)
+            imageView.loadImage(imageModel.thumbnail_url)
         }
     }
     

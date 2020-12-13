@@ -14,7 +14,7 @@ protocol NetworkServiceType {
         query: String?,
         size: Int,
         page: Int
-    ) -> Observable<(images: [DocumentModel], nextPage: Int?)>
+    ) -> Observable<(images: [ImageModel], nextPage: Int?)>
 }
 
 class NetworkService: NetworkServiceType {
@@ -23,8 +23,8 @@ class NetworkService: NetworkServiceType {
         query: String?,
         size: Int = 30,
         page: Int
-    ) -> Observable<(images: [DocumentModel], nextPage: Int?)> {
-        let emptyResult: ([DocumentModel], Int?) = ([], nil)
+    ) -> Observable<(images: [ImageModel], nextPage: Int?)> {
+        let emptyResult: ([ImageModel], Int?) = ([], nil)
         
         guard let query = query
         else {

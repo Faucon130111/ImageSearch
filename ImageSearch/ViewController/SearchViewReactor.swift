@@ -16,15 +16,15 @@ class SearchViewReactor: Reactor {
     
     enum Mutation {
         case setQuery(String?)
-        case setImages([DocumentModel], Int?)
-        case appendImages([DocumentModel], Int?)
+        case setImages([ImageModel], Int?)
+        case appendImages([ImageModel], Int?)
         case setLoadingNextPage(Bool)
     }
     
     struct State {
         var query: String?
         var page: Int?
-        var documentModels: [DocumentModel]?
+        var imageModels: [ImageModel]?
         var isLoadingNextPage: Bool = false
     }
 
@@ -82,16 +82,16 @@ class SearchViewReactor: Reactor {
             newState.query = query
             return newState
             
-        case let .setImages(documentModels, nextPage):
-            newState.documentModels = documentModels
+        case let .setImages(imageModel, nextPage):
+            newState.imageModels = imageModel
             newState.page = nextPage
             return newState
             
-        case let .appendImages(documentModels, nextPage):
-            if newState.documentModels == nil {
-                newState.documentModels = []
+        case let .appendImages(imageModels, nextPage):
+            if newState.imageModels == nil {
+                newState.imageModels = []
             }
-            newState.documentModels!.append(contentsOf: documentModels)
+            newState.imageModels!.append(contentsOf: imageModels)
             newState.page = nextPage
             return newState
             
@@ -103,8 +103,8 @@ class SearchViewReactor: Reactor {
     }
     
     func reactorForImageDetail(_ indexPath: IndexPath) -> ImageDetailViewReactor {
-        let documentModel = currentState.documentModels![indexPath.row]
-        return ImageDetailViewReactor(documentModel: documentModel)
+        let imageModel = currentState.imageModels![indexPath.row]
+        return ImageDetailViewReactor(imageModel: imageModel)
     }
     
 }
