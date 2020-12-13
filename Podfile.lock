@@ -16,9 +16,6 @@ PODS:
   - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
-  - RxGesture (3.0.2):
-    - RxCocoa (~> 5.1)
-    - RxSwift (~> 5.1)
   - RxOptional (4.1.0):
     - RxCocoa (~> 5)
     - RxSwift (~> 5)
@@ -38,7 +35,6 @@ DEPENDENCIES:
   - RxAlamofire
   - RxBlocking
   - RxCocoa
-  - RxGesture
   - RxOptional
   - RxSwift
   - RxTest
@@ -52,7 +48,6 @@ SPEC REPOS:
     - RxAlamofire
     - RxBlocking
     - RxCocoa
-    - RxGesture
     - RxOptional
     - RxRelay
     - RxSwift
@@ -67,7 +62,6 @@ SPEC CHECKSUMS:
   RxAlamofire: 8e144c62dcc01d68dcb366bfc542eb6dd46bab78
   RxBlocking: 5f700a78cad61ce253ebd37c9a39b5ccc76477b4
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
-  RxGesture: d6bd7447ca3a596c7a9702a6a2b6a2bb5d8bae54
   RxOptional: b1fcd60856807a564c0215c2184b8d33e7826dc2
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
@@ -75,6 +69,6 @@ SPEC CHECKSUMS:
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: b0e8209db1e75a06427287e54b06bff33db69533
+PODFILE CHECKSUM: 6b00d0bcbe1b7602c8825897651c710ca19e3f65
 
 COCOAPODS: 1.9.1
