@@ -1,5 +1,7 @@
 # ImageSearch
 
+![screenshots](https://user-images.githubusercontent.com/47510671/102073484-b9287000-3e46-11eb-888f-1f2ef0dc2fcd.png)
+
 ### 프로젝트 내용
 
 - 카카오 Daum 이미지 검색 API를 사용하여 이미지 검색 앱 구현
@@ -25,6 +27,10 @@
     - 이미지의 비율을 유지 (세로로 길 경우 스크롤 됨)
   
   - 출처와 문서 작성 시간이 있을 경우 이미지 아래 부분에 표시
+
+- 네트워크 Error 발생 시 예외 처리 후 검색 결과 없도록 표시
+
+- 의존성 주입(Dependency Injection)을 통한 네트워크 테스트 코드 작성 
 
 ### 기술 스택
 

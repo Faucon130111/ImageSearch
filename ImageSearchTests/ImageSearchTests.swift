@@ -25,7 +25,7 @@ class ImageSearchTests: XCTestCase {
         
         // when
         let _ = networkService.fetchImages(
-            query: "brandi",
+            query: "한지민",
             page: 1
         )
         
@@ -43,7 +43,7 @@ class ImageSearchTests: XCTestCase {
         )
         XCTAssertEqual(
             dictionary?["query"] as? String,
-            "brandi"
+            "한지민"
         )
     }
 
