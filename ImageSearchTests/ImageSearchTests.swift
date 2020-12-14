@@ -18,16 +18,33 @@ class ImageSearchTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testNetworkService_fetchImages() {
+        // given
+        let session = SessionStub()
+        let networkService = NetworkService(session: session)
+        
+        // when
+        let _ = networkService.fetchImages(
+            query: "brandi",
+            page: 1
+        )
+        
+        // then
+        let params = session.requestParameters
+        let dictionary: [String: Any]? = params?.parameters
+        
+        XCTAssertEqual(
+            params?.method,
+            .get
+        )
+        XCTAssertEqual(
+            try params?.url.asURL().absoluteString,
+            "https://dapi.kakao.com/v2/search/image"
+        )
+        XCTAssertEqual(
+            dictionary?["query"] as? String,
+            "brandi"
+        )
     }
 
 }
