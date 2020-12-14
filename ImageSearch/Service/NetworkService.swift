@@ -19,6 +19,12 @@ protocol NetworkServiceType {
 
 class NetworkService: NetworkServiceType {
     
+    fileprivate var session: SessionProtocol
+    
+    init(session: SessionProtocol) {
+        self.session = session
+    }
+    
     func fetchImages(
         query: String?,
         size: Int = 30,
@@ -42,11 +48,13 @@ class NetworkService: NetworkServiceType {
             "Authorization": "KakaoAK 0610a681b98c978c90fc4a3c58bfbc7c"
         ]
         
-        return json(
+        return session.json(
             .get,
             "https://dapi.kakao.com/v2/search/image",
             parameters: parameters,
-            headers: headers
+            encoding: URLEncoding.default,
+            headers: headers,
+            interceptor: nil
         )
         .map { response in
             guard let jsonData = try? JSONSerialization.data(
@@ -70,5 +78,57 @@ class NetworkService: NetworkServiceType {
         })
         .catchErrorJustReturn(emptyResult)
     }
+    
+//    func fetchImages(
+//        query: String?,
+//        size: Int = 30,
+//        page: Int
+//    ) -> Observable<(images: [ImageModel], nextPage: Int?)> {
+//        let emptyResult: ([ImageModel], Int?) = ([], nil)
+//
+//        guard let query = query
+//        else {
+//            return .just(emptyResult)
+//        }
+//
+//        let parameters: Parameters = [
+//            "query": query,
+//            "sort": "recency",
+//            "size": 30,
+//            "page": page
+//        ]
+//
+//        let headers: HTTPHeaders = [
+//            "Authorization": "KakaoAK 0610a681b98c978c90fc4a3c58bfbc7c"
+//        ]
+//
+//        return json(
+//            .get,
+//            "https://dapi.kakao.com/v2/search/image",
+//            parameters: parameters,
+//            headers: headers
+//        )
+//        .map { response in
+//            guard let jsonData = try? JSONSerialization.data(
+//                    withJSONObject: response,
+//                    options: .prettyPrinted
+//            ),
+//            let responseModel: ResponseModel = try? JSONDecoder().decode(
+//                ResponseModel.self,
+//                from: jsonData
+//            )
+//            else {
+//                return emptyResult
+//            }
+//            return (
+//                responseModel.documents,
+//                page + 1
+//            )
+//        }
+//        .do(onError: { error in
+//            print("⚠️ Network error: \(error.localizedDescription)")
+//        })
+//        .catchErrorJustReturn(emptyResult)
+//    }
     
 }

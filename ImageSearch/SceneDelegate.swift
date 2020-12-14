@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -21,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
-        let networkService = NetworkService()
+        let networkService = NetworkService(session: Alamofire.Session.default.rx)
         let searchViewController = SearchViewController.instantiate()
         searchViewController.reactor = SearchViewReactor(networkService: networkService)
         
